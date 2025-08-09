@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Domaine : Littérature</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('litterature.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 2rem;
+      user-select: none;
+    }
+    h1 {
+      text-align: center;
+      color: #2d3748;
+    }
+    #searchBar {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.6rem 1rem;
+      width: 80%;
+      max-width: 500px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .library {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 2rem;
+    }
+    .drawer {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .drawer:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .drawer img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .info {
+      padding: 1rem;
+      background-color: #edf2f7;
+      color: #2c5282;
+      text-align: center;
+    }
+    .info h3 {
+      margin: 0.2rem 0;
+    }
+    .favorite {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #ccc;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .favorite.active {
+      color: gold;
+    }
+    /* Modale */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      width: 90%;
+      max-width: 900px;
+      height: 90vh;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-content iframe {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #333;
+      z-index: 20;
+    }
+
+    .pagination {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pagination button {
+      padding: 0.4rem 0.8rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #2c5282;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .pagination button.active {
+      background-color: #4a90e2;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>📘 Domaine : Littérature</h1>
+  <input type="text" id="searchBar" placeholder="Rechercher un titre ou un auteur..." />
+  <div class="library" id="library"></div>
+  <div class="pagination" id="pagination"></div>
+
+  <!-- Modale -->
+  <div class="modal" id="pdfModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">×</span>
+      <iframe id="pdfFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    const ouvrages = [
+      // ➕ Liste à personnaliser :
+      { titre: "L'art d'avoir toujours raison", auteur: "R.Arthur Schoppeneir", image: "littera.jpeg", pdf: "L'art d'avoir toujours raison-1(0).pdf" },
+      { titre: "Contes intitatiques peuls", auteur: "Amadou Hampate Ba", image: "littera.jpeg", pdf: "Amadou Hampate Ba - Contes intitatiques peuls.pdf" },
+      { titre: "Letrange Destin De Wangrin", auteur: "Amadou Hampate Ba", image: "littera.jpeg", pdf: "Amadou Hampate Ba - Letrange Destin De Wangrin.pdf" },
+      { titre: "Vie et Enseignement de Tierno Bokar _ Le Sage de Bandiagara", auteur: "Amadou Hampate Ba", image: "Amadou Hampate Ba", pdf: "Amadou Hampaté Bâ - Vie et Enseignement de Tierno Bokar _ Le Sage de Bandiagara (2004, Seuil).pdf" },
+      { titre: "Les 48 lois du pouvoir", auteur: "Robert Greene", image: "littera.jpeg", pdf: "Les 48 lois du pouvoir - Greene Robert.pdf" },
+      { titre: "S'il est minuit dans le siècle", auteur: "Victor Serge", image: "littera.jpeg", pdf: "Victor Serge - S'il est minuit dans le siècle.pdf" },
+      { titre: "De mon propre aveu", auteur: "Vergès", image: "littera.jpeg", pdf: "Vergès - De mon propre aveu.pdf" },
+      { titre: "L’œuvre d’art à l’époque de sa reproductibilité technique", auteur: "Walter Benjamin", image: "littera.jpeg", pdf: "Walter Benjamin - .pdf" },
+      { titre: "Un desir interdit", auteur: "Emma Darcy", image: "littera.jpeg", pdf: "Un desir interdit (Emma Darcy).pdf" },
+      { titre: "l'art de parler", auteur: " Justus Kronfeld ", image: "littera.jpeg", pdf: "l'art de parler.pdf" },
+      { titre: "L'antisemitisme de plume", auteur: "Pierre-Andre Taguieff", image: "littera.jpeg", pdf: "L'antisemitisme de plume 1940-1 - Pierre-Andre Taguieff.pdf" },
+      { titre: "L'AGE DE L'ÉLOQUENCE", auteur: "Marc Fumaroli", image: "littera.jpeg", pdf: "L'AGE DE L'ÉLOQUENCE.pdf" },
+      { titre: "La_Gloire_Des_Imposteurs_Lettres_sur_le_Mali_et_lAfrique", auteur: "Aminata_Traore", image: "littera.jpeg", pdf: "Aminata_Traore_La_Gloire_Des_Imposteurs_Lettres_sur_le_Mali_et_lAfrique.pdf" },
+      { titre: "bescherelle la conjugaison : 12000 verbes", auteur: "Michel Arrivé", image: "littera.jpeg", pdf: "bescherelle la conjugaison pour tous.pdf" },
+      { titre: "A la_recherche_du_temps_perdu", auteur: "Marcel Proust", image: "littera.jpeg", pdf: "A la_recherche_du_temps_perdu_xv - @CahiersJaunes.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+      { titre: "Nouveau titre", auteur: "Nom", image: "image.jpg", pdf: "fichier.pdf" },
+
+      // Ajoute jusqu'à 100+ ouvrages ici...
+    ];
+
+    const itemsPerPage = 16;
+    let currentPage = 1;
+    let filtered = ouvrages;
+
+    const library = document.getElementById("library");
+    const pagination = document.getElementById("pagination");
+    const modal = document.getElementById("pdfModal");
+    const pdfFrame = document.getElementById("pdfFrame");
+
+    function renderBooks(list, page = 1) {
+      library.innerHTML = "";
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = list.slice(start, end);
+
+      pageItems.forEach(livre => {
+        const drawer = document.createElement("div");
+        drawer.className = "drawer";
+
+        drawer.innerHTML = `
+          <span class="favorite" onclick="toggleFavorite(event, this)">☆</span>
+          <img src="${livre.image}" alt="Couverture PDF">
+          <div class="info">
+            <h3>Titre : ${livre.titre}</h3>
+            <p>Auteur : ${livre.auteur}</p>
+            <p class="views">Vues : <span class="view-count">0</span></p>
+            <p style="font-size: 0.9em; color: gray;">(Cliquez pour lire le document)</p>
+          </div>
+        `;
+
+        drawer.addEventListener("click", (e) => {
+          if (!e.target.classList.contains("favorite")) {
+            pdfFrame.src = livre.pdf + "#toolbar=0&navpanes=0";
+            modal.style.display = "flex";
+            const count = drawer.querySelector(".view-count");
+            count.textContent = parseInt(count.textContent) + 1;
+            history.pushState({ modal: true }, "");
+          }
+        });
+
+        library.appendChild(drawer);
+      });
+
+      renderPagination(list.length, page);
+    }
+
+    function renderPagination(totalItems, page) {
+      pagination.innerHTML = "";
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (totalPages <= 1) return;
+
+      if (page > 1) {
+        pagination.innerHTML += `<button onclick="goToPage(${page - 1})">← Précédent</button>`;
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+        pagination.innerHTML += `<button onclick="goToPage(${i})" class="${i === page ? 'active' : ''}">${i}</button>`;
+      }
+
+      if (page < totalPages) {
+        pagination.innerHTML += `<button onclick="goToPage(${page + 1})">Suivant →</button>`;
+      }
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderBooks(filtered, currentPage);
+    }
+
+    function toggleFavorite(e, el) {
+      e.stopPropagation();
+      el.classList.toggle("active");
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      pdfFrame.src = "";
+      history.back();
+    }
+
+    // Recherche
+    document.getElementById("searchBar").addEventListener("input", function () {
+      const term = this.value.toLowerCase();
+      filtered = ouvrages.filter(livre =>
+        livre.titre.toLowerCase().includes(term) ||
+        livre.auteur.toLowerCase().includes(term)
+      );
+      currentPage = 1;
+      renderBooks(filtered, currentPage);
+    });
+
+    // Historique retour
+    window.addEventListener("popstate", (e) => {
+      if (!e.state || !e.state.modal) {
+        modal.style.display = "none";
+        pdfFrame.src = "";
+      }
+    });
+
+    // Sécurité copier/imprimer
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && ['s','u','p','c'].includes(e.key.toLowerCase())) ||
+        e.key === 'PrintScreen'
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    // Initialisation
+    renderBooks(ouvrages, currentPage);
+  </script>
+</body>
+</html>

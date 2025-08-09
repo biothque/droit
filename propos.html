@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Page Blanche - Avant-Propos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      filter: grayscale(100%);
+      transition: filter 1s ease;
+    }
+
+    body.color-on {
+      filter: grayscale(0%);
+    }
+
+    .section-haut {
+      height: 40vh;
+      background-image: url('ets.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .section-centre {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .zone-texte {
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .carousel {
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .carousel-caption {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .carousel-caption p {
+      margin: 4px 0;
+      line-height: 1.3;
+    }
+
+    #carousel-name {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    #carousel-function {
+      font-size: 14px;
+      color: #444;
+    }
+
+    .zone-contact {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .zone-contact a {
+      text-decoration: none;
+      font-size: 30px;
+    }
+
+    .zone-contact i {
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .zone-contact i:hover {
+      transform: scale(1.2);
+      color: #0066cc;
+    }
+
+    .section-bas {
+      height: auto;
+      padding: 20px;
+      background-image: url('etoile.jpeg');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      color: white;
+    }
+
+    footer {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .zone-texte {
+        font-size: 16px;
+      }
+
+      .zone-contact {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
+</head>
+<body onclick="enableColor()">
+  <div class="section-haut"></div>
+
+  <div class="section-centre">
+    <!-- Texte de présentation -->
+    <div class="zone-texte">
+      Cette bibliothèque numérique a été conçue dans le cadre d’un partenariat stratégique entre l’Université Kongo et l’entreprise Business Céréale Africa, par le canal de son Recteur, le Professeur Germain, en date du 19 juillet 2025.
+      Elle a pour vocation de faciliter l’accès aux ressources pédagogiques, scientifiques et culturelles, afin de renforcer la formation, la recherche et l’innovation au sein de la communauté universitaire.
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel">
+      <img id="carousel-img" src="uk1.jpg" alt="Image 1">
+      <div class="carousel-caption" id="carousel-caption">
+        <p id="carousel-name">Université Kongo</p>
+        <p id="carousel-function">Inauguration de la Bibliothèque numérique de la médecine</p>
+      </div>
+    </div>
+
+    <!-- Zone de contact -->
+    <div class="zone-contact">
+      <a href="#"><i class="fab fa-facebook-square" style="color:#1877f2;"></i></a>
+      <a href="https://wa.me/243904091735"><i class="fab fa-whatsapp" style="color:#25d366;"></i></a>
+      <a href="#"><i class="fab fa-twitter" style="color:#1da1f2;"></i></a>
+      <a href="https://t.me/NKD"><i class="fab fa-telegram" style="color:#0088cc;"></i></a>
+    </div>
+  </div>
+
+  <div class="section-bas">
+    <footer>
+      Université Kongo | Campus de Kisantu, RDC <br>
+      Contact : info@univkongo.cd | Tél : +243 891 913 173
+    </footer>
+  </div>
+
+  <script>
+    // Activer les couleurs au clic
+    function enableColor() {
+      document.body.classList.add("color-on");
+    }
+
+    // Images et légendes
+    const images = [
+      {
+        src: "uk1.jpg",
+        name: "Université Kongo",
+        function: "Inauguration de la Bibliothèque numérique de la médecine"
+      },
+      {
+        src: "one.jpg",
+        name: "ONESIME NANINKASA Samuel",
+        function: "Entrepreneur - Informaticien - Programmeur - Astrologue - Juriste en droit de l’espace extra-atmosphérique"
+      },
+      {
+        src: "bonna.jpg",
+        name: "Dr NTUMBA NANIKUNTONDA Bonnaldi",
+        function: "Entrepreneure"
+      },
+      {
+        src: "laura.jpg",
+        name: "NDIYO YAISIMBA Laurine",
+        function: "Entrepreneure"
+      },
+      {
+        src: "cilia.jpg",
+        name: "NZUNGU SEKE Princilia",
+        function: "Entrepreneur"
+      },
+      {
+        src: "uk.jpg",
+        name: "Université Kongo",
+        function: "Un symbole d'excellence académique"
+      }
+    ];
+
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      document.getElementById("carousel-img").src = images[index].src;
+      document.getElementById("carousel-name").textContent = images[index].name;
+      document.getElementById("carousel-function").textContent = images[index].function;
+    }, 4000);
+  </script>
+</body>
+</html>

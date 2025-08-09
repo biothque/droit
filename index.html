@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture Sacrée – Thoth</title>
+  <link rel="stylesheet" href="thoth.css">
+</head>
+<body>
+  <!-- Vidéo de fond -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="thoth-loop.mp4" type="video/mp4">
+    Votre navigateur ne supporte pas la vidéo HTML5.
+  </video>
+
+  <!-- Contenu visible -->
+  <div class="overlay">
+    <h1>Bienvenue</h1>
+    <p> Ecrire et lire, voyageons à travers la ligne temporelle</p>
+
+    <!-- Bouton Connexion -->
+    <a href="login.html" class="btn-connexion" onclick="vibrateButton()">Connexion</a>
+  </div>
+
+  <!-- Script pour vibration -->
+  <script>
+    function vibrateButton() {
+      if (navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+    }
+  </script>
+</body>
+</html>

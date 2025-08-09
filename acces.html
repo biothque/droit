@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliothèque Virtuelle</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2d3748;
+    }
+
+    .library {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 2rem;
+    }
+
+    .drawer {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 220px;
+      text-align: center;
+    }
+
+    .drawer:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    .drawer img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .drawer h3 {
+      margin: 0;
+      padding: 1rem;
+      background-color: #edf2f7;
+      color: #2c5282;
+    }
+
+    .drawer a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Ma Bibliothèque Virtuelle</h1>
+
+  <div class="library">
+    <!-- 5 domaines -->
+    <div class="drawer">
+      <a href="medecine.html">
+        <img src="medecine.jpeg" alt="Médecine">
+        <h3>Médecine</h3>
+      </a>
+    </div>
+
+    <div class="drawer">
+      <a href="droit.html">
+        <img src="droit.jpeg" alt="Droit">
+        <h3>Droit</h3>
+      </a>
+    </div>
+
+    <div class="drawer">
+  <a href="https://fr.scribd.com/search?query=m%C3%A9decine&verbatim=true&filters=%7B%22language%22%3A%5B%225%22%5D%7D"
+    target="_self">
+    <img src="informatique.jpeg" alt="Informatique">
+    <h3>Édition intégrale</h3>
+  </a>
+</div>
+
+    <div class="drawer">
+      <a href="litterature.html">
+        <img src="litterature.jpeg" alt="Littérature">
+        <h3>Littérature</h3>
+      </a>
+    </div>
+
+    <div class="drawer">
+      <a href="propos.html">
+        <img src="mathematiques.jpeg" alt="propos">
+        <h3>De nous</h3>
+      </a>
+    </div>
+  </div>
+
+  <!-- Domaine 6 centré en dessous -->
+  <div class="library" style="justify-content: center; margin-top: 3rem;">
+    <div class="drawer">
+      <a href="travaux_scientifiques.html">
+        <img src="travaux_scientifiques.jpeg" alt="travaux_scientifiques">
+        <h3>Travaux scientifiques</h3>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
