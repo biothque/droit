@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: url('thoth.jpeg') no-repeat center center fixed;
+  background: url('fonme.jpg') no-repeat center center fixed;
   background-size: 70%;
   font-family: "Times New Roman", serif;
   color: white;
@@ -57,3 +57,4 @@ p {
 .btn-connexion:active {
   transform: scale(0.95);
 }
+
