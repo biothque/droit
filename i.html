@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Droit International</title>
+  <script src="auth.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -62,7 +63,7 @@
 </head>
 <body>
   <h1>📚 Droit International</h1>
-
+<button onclick="logout()" style="position: fixed; top: 1rem; right: 1rem;">Déconnexion</button>
   <div class="library">
     <!-- 5 domaines -->
     <div class="drawer">
@@ -106,6 +107,13 @@
     </div>
   </div>
   </div>
+   <script>
+  // Vérifie la connexion au chargement
+  const user = checkAuth();  
+
+  // Tu peux afficher le matricule ou nom de l'utilisateur si tu veux
+  console.log("Utilisateur connecté :", user.matricule);
+              </script>
 </body>
 </html>
 
