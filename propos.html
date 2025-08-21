@@ -5,7 +5,7 @@
   <title>Page Blanche - Avant-Propos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <script src="auth.js"></script>
   <style>
     * {
       margin: 0;
@@ -132,6 +132,7 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/your_kit_id.js" crossorigin="anonymous"></script>
 </head>
+  <button onclick="logout()" style="position: fixed; top: 1rem; right: 1rem;">Déconnexion</button>
 <body onclick="enableColor()">
   <div class="section-haut"></div>
 
@@ -166,7 +167,13 @@
       Contact : info@univkongo.cd | Tél : +243 891 913 173
     </footer>
   </div>
+<script>
+  // Vérifie la connexion au chargement
+  const user = checkAuth();  
 
+  // Tu peux afficher le matricule ou nom de l'utilisateur si tu veux
+  console.log("Utilisateur connecté :", user.matricule);
+</script>
   <script>
     // Activer les couleurs au clic
     function enableColor() {
