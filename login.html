@@ -227,6 +227,24 @@
           localStorage.setItem("userSession", JSON.stringify(data[0]));
           setMessage("Connexion réussie ✅ Redirection...", "ok");
           await successJingle();
+          // Générer un ID unique pour l'appareil
+const deviceId = self.crypto.randomUUID();
+
+// Créer une entrée dans la table "connexions"
+const connexion = {
+  "identifiant du propriétaire": matricule,   // ton champ matricule
+  "identifiant_de_l'appareil": deviceId,
+  "statuts": "connecté",
+  "date_connexion": new Date()
+};
+
+Backendless.Data.of("connexions").save(connexion)
+  .then(() => {
+    console.log("Connexion enregistrée !");
+  })
+  .catch(error => {
+    console.error("Erreur enregistrement connexion :", error);
+  });
 
           // Petite latence pour que le jingle soit audible
           setTimeout(()=>{ window.location.href = "acces.html"; }, 300);
@@ -252,3 +270,4 @@
   </script>
 </body>
 </html>
+
