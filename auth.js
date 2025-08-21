@@ -14,7 +14,7 @@ function checkAuth(redirectTo = "login.html") {
 }
 
 // Déconnexion
-function logout(redirectTo = "login.html") {
+function logout(redirectTo = "index.html") {
   localStorage.removeItem("userSession");
   window.location.href = redirectTo;
 }
