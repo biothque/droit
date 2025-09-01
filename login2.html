@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <style>
+    #loginMessage { margin-top: 10px; font-weight: bold; }
+    .info { color: blue; }
+    .ok { color: green; }
+    .err { color: red; }
+    .floating-actions { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <form id="loginForm">
+    <label>Matricule :</label>
+    <input type="text" id="matricule" required>
+  </form>
+
+  <div class="floating-actions">
+    <button type="submit" form="loginForm" id="submitBtn">Se connecter</button>
+  </div>
+
+  <p id="loginMessage"></p>
+
+  <script>
+    // === Config Backendless ===
+    const APP_ID = "B4A3DE5F-5247-43FC-8831-C87303139B55";
+    const API_KEY = "0D40C30E-CC67-4C67-B532-1BF5BB94BCC4";
+    const TABLE  = "utilisateurs";
+
+    // === Gestion deviceId unique par appareil ===
+    let deviceId = localStorage.getItem("deviceId");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("deviceId", deviceId);
+    }
+
+    // === Utilitaires UI ===
+    const $ = (sel) => document.querySelector(sel);
+    const loginForm = $("#loginForm");
+    const submitBtn = $("#submitBtn");
+    const messageEl = $("#loginMessage");
+
+    function setMessage(text, cls="info"){
+      messageEl.className = cls;
+      messageEl.textContent = text;
+    }
+
+    // === Sons (Web Audio) ===
+    let audioCtx;
+    function ensureAudio(){
+      if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+    function beep({freq=440, duration=200, type="sine", gain=0.05} = {}){
+      ensureAudio();
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.value = freq;
+      g.gain.value = gain;
+      osc.connect(g).connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.start(now);
+      osc.stop(now + duration/1000);
+    }
+    async function successJingle(){
+      ensureAudio();
+      const notes = [261.63, 329.63, 392.00]; // do-mi-sol
+      for (let i=0;i<notes.length;i++){
+        beep({freq: notes[i], duration: 140, type:"triangle", gain:0.06});
+        await new Promise(r=>setTimeout(r, 120));
+      }
+    }
+    function errorBuzz(){
+      beep({freq: 120, duration: 260, type:"square", gain:0.04});
+      if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
+    }
+
+    // === Gestion de la connexion ===
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const matricule = $("#matricule").value.trim();
+
+      if(!matricule){
+        setMessage("Veuillez entrer votre matricule.", "err");
+        errorBuzz();
+        return;
+      }
+
+      setMessage("Vérification en cours...", "info");
+      submitBtn.disabled = true;
+
+      try{
+        // 1. Vérifier si le matricule existe
+        const where = encodeURIComponent(`matricule='${matricule}'`);
+        const url = `https://api.backendless.com/${APP_ID}/${API_KEY}/data/${TABLE}?where=${where}`;
+        const response = await fetch(url);
+        if(!response.ok){
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0){
+          // 2. Vérifier les sessions actives
+          const whereSessions = encodeURIComponent(`matricule='${matricule}' AND status='active'`);
+          const sessionsUrl = `https://api.backendless.com/${APP_ID}/${API_KEY}/data/Sessions?where=${whereSessions}`;
+          const sessionsResp = await fetch(sessionsUrl);
+          const sessions = await sessionsResp.json();
+
+          // Si déjà 2 appareils connectés et que ce deviceId n’est pas dedans → blocage
+          if (sessions.length >= 2 && !sessions.some(s => s.deviceId === deviceId)) {
+            setMessage("⚠️ Ce matricule est déjà connecté sur deux appareils !", "err");
+            errorBuzz();
+            return;
+          }
+
+          // 3. Enregistrer ou réactiver une session pour ce device
+          let mySession = sessions.find(s => s.deviceId === deviceId);
+          if (!mySession) {
+            const newSession = {
+              matricule: matricule,
+              deviceId: deviceId,
+              loginTime: new Date().toISOString(),
+              status: "active"
+            };
+            await fetch(`https://api.backendless.com/${APP_ID}/${API_KEY}/data/Sessions`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(newSession)
+            });
+          }
+
+          // 4. Succès
+          localStorage.setItem("userSession", JSON.stringify(data[0]));
+          setMessage("Connexion réussie ✅ Redirection...", "ok");
+          await successJingle();
+          setTimeout(()=>{ window.location.href = "acces.html"; }, 300);
+
+        }else{
+          setMessage("Matricule incorrect ❌", "err");
+          errorBuzz();
+        }
+      }catch(err){
+        console.error(err);
+        setMessage("Erreur de connexion : " + (err?.message || err), "err");
+        errorBuzz();
+      }finally{
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Accessibilité : Enter sur le champ matricule → focus bouton
+    $("#matricule").addEventListener("keydown", (e)=>{
+      if(e.key === "Enter"){
+        submitBtn.focus();
+      }
+    });
+  </script>
+</body>
+</html>
