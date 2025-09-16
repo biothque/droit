@@ -5,11 +5,12 @@
   <title>Domaine : Médecine</title>
   <link rel="stylesheet" href="menu.css">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="auth.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('medecine(1).jpeg') no-repeat center center fixed;
+      background: url('medecine.jpeg') no-repeat center center fixed;
       background-size: cover;
       margin: 0;
       padding: 2rem;
@@ -138,6 +139,7 @@
 </head>
 <body>
   <h1>📘 Domaine : Médecine</h1>
+  <button onclick="logout()" style="position: fixed; top: 1rem; right: 1rem;">Déconnexion</button>
   <input type="text" id="searchBar" placeholder="Rechercher un titre ou un auteur..." />
   <div class="library" id="library"></div>
   <div class="pagination" id="pagination"></div>
@@ -566,5 +568,6 @@ const ouvrages = [
   <script src="menu.js"></script>
 </body>
 </html>
+
 
 
