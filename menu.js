@@ -8,10 +8,13 @@ btn.innerHTML = 'Menu <i class="fas fa-bars"></i>';
 const menu = document.createElement('ul');
 menu.id = 'menu';
 menu.innerHTML = `
-    <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
-    <li><a href="#"><i class="fas fa-user"></i> À propos</a></li>
-    <li><a href="#"><i class="fas fa-cogs"></i> Services</a></li>
-    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+    <li><a href="acces.html"><i class="fas fa-home"></i> Accueil</a></li>
+    <li><a href="https://biothque.github.io/bibliothque/medecine.html"><i class="fas fa-user"></i> Médecine </a></li>
+    <li><a href="bienvenue.html"><i class="fas fa-cogs"></i> Droit</a></li>
+    <li><a href="https://biothque.github.io/bibliothque/litterature.html"><i class="fas fa-cogs"></i> Littérature</a></li>
+    <li><a href="https://fr.scribd.com/search?query=Fran%C3%A7ais%20"><i class="fas fa-cogs"></i> Grande Édition</a></li>
+   <li><a href="travaux_scientifiques.html"><i class="fas fa-home"></i> Travaux scientifiques</a></li>
+    <li><a href="propos.html"><i class="fas fa-envelope"></i> Contact</a></li>
 `;
 
 container.appendChild(btn);
