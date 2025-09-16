@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="menu.css">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="auth.js"></script>
   <title>Domaine : Littérature</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -138,6 +139,7 @@
 </head>
 <body>
   <h1>📘 Domaine : Littérature</h1>
+  <button onclick="logout()" style="position: fixed; top: 1rem; right: 1rem;">Déconnexion</button>
   <input type="text" id="searchBar" placeholder="Rechercher un titre ou un auteur..." />
   <div class="library" id="library"></div>
   <div class="pagination" id="pagination"></div>
@@ -312,4 +314,5 @@
   <script src="menu.js"></script>
 </body>
 </html>
+
 
