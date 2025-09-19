@@ -5,35 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lecture Sacrée – Thoth</title>
   <link rel="stylesheet" href="thoth.css">
+  <style>
+    /* Overlay politique */
+    #politiqueOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,0.95);
+      z-index: 1000;
+      display: none; /* Caché par défaut */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    #politiqueOverlay h2 {
+      margin-bottom: 15px;
+    }
+
+    #politiqueOverlay p {
+      margin-bottom: 10px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    #skipBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    #skipBtn:hover {
+      background-color: #155ab6;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Contenu visible -->
   <div class="overlay">
     <h1>Bienvenue</h1>
-    <p> Ecrire et lire, voyageons à travers la ligne temporelle</p>
+    <p>Écrire et lire, voyageons à travers la ligne temporelle</p>
 
-    <!-- Bouton Connexion -->
+    <!-- Boutons -->
     <a href="login.html" class="btn-connexion" onclick="vibrateButton()">Connexion</a>
+    <a href="signup.html" class="btn-signup" onclick="vibrateButton()">Créer un compte</a>
   </div>
 
-<!-- Bouton Créer un compte -->
-<a href="signup.html" class="btn-signup" onclick="vibrateButton()">Créer un compte</a>
-</div>
-  <!-- Script pour vibration -->
+  <!-- Overlay Politique -->
+  <div id="politiqueOverlay">
+    <h2>Politique d'utilisation</h2>
+    <p>Bienvenue sur notre plateforme. Nous sommes une entreprise spécialisée dans le domaine numérique, fournissant des services et applications visant à faciliter l'accès à l'information et aux outils technologiques.</p>
+    <p>Tout le contenu présent sur cette plateforme est protégé par le droit d'auteur et la législation congolaise sur la propriété intellectuelle.</p>
+    <p>Vous acceptez d’utiliser nos services uniquement à des fins légales et conformes au Droit congolais. Toute utilisation frauduleuse, piratage ou tentative d'accès non autorisé est interdite.</p>
+    <button id="skipBtn" onclick="closePolitique()">Passer</button>
+  </div>
+
+  <!-- Script -->
   <script>
     function vibrateButton() {
       if (navigator.vibrate) {
         navigator.vibrate(100);
       }
     }
+
+    const overlay = document.getElementById('politiqueOverlay');
+
+    // Vérifie si déjà vu
+    if (!localStorage.getItem('politiqueVue')) {
+      overlay.style.display = 'flex'; // Affiche l'overlay
+      // Disparition auto après 30 secondes
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        localStorage.setItem('politiqueVue', 'true');
+      }, 30000);
+    }
+
+    // Fermer avec le bouton
+    function closePolitique() {
+      overlay.style.display = 'none';
+      localStorage.setItem('politiqueVue', 'true');
+    }
   </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
