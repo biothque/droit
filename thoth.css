@@ -57,5 +57,23 @@ p {
 .btn-connexion:active {
   transform: scale(0.95);
 }
+/* Positionne le bouton Créer un compte en haut à droite */
+.btn-signup {
+  position: absolute; /* position fixe par rapport à la fenêtre */
+  top: 20px;          /* distance du haut */
+  right: 20px;        /* distance de la droite */
+  padding: 10px 20px;
+  background-color: #4CAF50; /* vert par exemple */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+/* Effet au survol */
+.btn-signup:hover {
+  transform: scale(1.05);
+}
 
 
