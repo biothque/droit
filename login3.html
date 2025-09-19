@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion Matricule</title>
+  <style>
+    body {font-family: Arial, sans-serif; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; height:100vh; background:#f5f5f5;}
+    input {padding:10px; margin:10px; border:2px solid #ccc; border-radius:5px;
+      font-size:16px; animation: blink 1s infinite alternate;}
+    button {padding:10px 20px; background:#3498db; color:#fff; border:none;
+      border-radius:5px; cursor:pointer;}
+    @keyframes blink { from{border-color:#3498db;} to{border-color:#ccc;} }
+    #msg {margin-top:15px; font-weight:bold;}
+  </style>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h2>Authentification Matricule</h2>
+  <input type="text" id="matricule" placeholder="Entrez votre matricule">
+  <button onclick="login()">Se connecter</button>
+  <div id="msg"></div>
+
+  <script>
+    const supabaseUrl = "http://iedvlwrmoxgyvudmaerz.supabase.com"; // <-- Ton URL
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllZHZsd3Jtb3hneXZ1ZG1hZXJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNjg5OTYsImV4cCI6MjA3Mzg0NDk5Nn0.kF2Jh-u5lXEZJRrtVwGV6AYV8PzmYW6S89dxLdfEPd4"; // <-- Clé API publique
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    const SESSION_DURATION = 5 * 60 * 1000; // 5 min
+
+    async function login() {
+      const m = document.getElementById("matricule").value.trim();
+      const msg = document.getElementById("msg");
+      if (!m) { msg.textContent = "Saisis un matricule."; return; }
+
+      // Chercher le matricule
+      let { data, error } = await supabase
+        .from("matricules")
+        .select("*")
+        .eq("matricule", m)
+        .single();
+
+      if (error || !data) { msg.textContent = "Matricule incorrect."; return; }
+
+      if (data.connected_users >= 2) {
+        msg.textContent = "Limite atteinte (2 connexions max).";
+        return;
+      }
+
+      // Incrémenter
+      await supabase
+        .from("matricules")
+        .update({ connected_users: data.connected_users + 1 })
+        .eq("id", data.id);
+
+      // Créer un token simple
+      const token = crypto.randomUUID();
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("matricule", m);
+
+      msg.textContent = "Connexion réussie ! Redirection...";
+      setTimeout(() => window.location.href = "acces.html", 1500);
+
+      // Timer d'expiration
+      setTimeout(async () => {
+        const stored = localStorage.getItem("matricule");
+        if (stored) {
+          // Décrémenter
+          let { data: rec } = await supabase
+            .from("matricules")
+            .select("*")
+            .eq("matricule", stored)
+            .single();
+          if (rec && rec.connected_users > 0) {
+            await supabase
+              .from("matricules")
+              .update({ connected_users: rec.connected_users - 1 })
+              .eq("id", rec.id);
+          }
+          localStorage.clear();
+          alert("Session expirée, veuillez vous reconnecter.");
+          window.location.href = "index.html";
+        }
+      }, SESSION_DURATION);
+    }
+  </script>
+</body>
+</html>
