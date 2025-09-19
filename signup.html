@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte – Thoth</title>
+  <link rel="stylesheet" href="thoth.css">
+  <script src="https://cdn.jsdelivr.net/npm/backendless"></script>
+</head>
+<body>
+
+  <div class="overlay">
+    <h1>Créer un compte</h1>
+    <p>Rejoignez-nous pour explorer la ligne temporelle</p>
+
+    <!-- Formulaire -->
+    <form id="signupForm">
+      <input type="email" name="email" placeholder="exemple@domaine.com" required>
+      <input type="text" name="nom" placeholder="Onesime Samuel" required>
+      <input type="text" name="institut" placeholder="Établissement" required>
+      <input type="text" name="option" placeholder="Faculté/section/niveau" required>
+      
+      <button type="submit" class="btn-connexion" onclick="vibrateButton()">S'inscrire</button>
+    </form>
+
+    <!-- Lien pour retourner à la connexion -->
+    <p id="redirectLink" style="display:none; margin-top:15px;">
+      Inscription réussie, Veuillez consulter votre boîte email pour olus d'informations à propos de votre numéro matricule ! <a href="login.html">Cliquez ici pour vous connecter</a>
+    </p>
+
+    <!-- Message d'erreur -->
+    <p id="errorMessage" style="color:red; display:none; margin-top:15px;"></p>
+  </div>
+
+  <script>
+    // Backendless config
+    const APP_ID = "B4A3DE5F-5247-43FC-8831-C87303139B55";
+    const API_KEY = "0D40C30E-CC67-4C67-B532-1BF5BB94BCC4";
+    const TABLE  = "membres";
+
+    Backendless.initApp(APP_ID, API_KEY);
+
+    // Vibration
+    function vibrateButton() {
+      if (navigator.vibrate) {
+        navigator.vibrate(100);
+      }
+    }
+
+    const form = document.getElementById('signupForm');
+    const redirectLink = document.getElementById('redirectLink');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const email = form.email.value.trim();
+      const nom = form.nom.value.trim();
+      const institut = form.institut.value.trim();
+      const option = form.option.value.trim();
+
+      try {
+        // Vérifier si l'utilisateur existe déjà
+        const query = Backendless.Data.QueryBuilder.create().setWhereClause(`email = '${email}'`);
+        const existing = await Backendless.Data.of(TABLE).find(query);
+
+        if (existing.length > 0) {
+          errorMessage.style.display = "block";
+          errorMessage.textContent = "Ce compte existe déjà !";
+          return;
+        }
+
+        // Créer le membre si n'existe pas
+        const membre = { email, nom, institut, option };
+        await Backendless.Data.of(TABLE).save(membre);
+
+        // Afficher le lien de redirection
+        redirectLink.style.display = "block";
+        errorMessage.style.display = "none";
+
+        // Optionnel : vider le formulaire
+        form.reset();
+
+      } catch (error) {
+        console.error(error);
+        errorMessage.style.display = "block";
+        errorMessage.textContent = "Une erreur est survenue, réessayez.";
+      }
+    });
+  </script>
+
+</body>
+</html>
