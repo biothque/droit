@@ -60,9 +60,9 @@ p {
 /* Positionne le bouton Créer un compte en haut à droite */
 .btn-signup {
   position: absolute; /* position fixe par rapport à la fenêtre */
-  top: 20px;          /* distance du haut */
-  right: 20px;        /* distance de la droite */
-  padding: 10px 20px;
+  top: 26px;          /* distance du haut */
+  right: 26px;        /* distance de la droite */
+  padding: 15px 25px;
   background-color: #4CAF50; /* vert par exemple */
   color: white;
   text-decoration: none;
@@ -76,4 +76,25 @@ p {
   transform: scale(1.05);
 }
 
+/* Bouton retour en haut à gauche */
+.btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Effet au survol */
+.btn-back:hover {
+  transform: scale(1.05);
+  background-color: #ddd;
+}
 
