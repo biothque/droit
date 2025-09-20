@@ -6,16 +6,43 @@
   <title>Politique d'utilisation – Thoth</title>
   <link rel="stylesheet" href="thoth.css">
   <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    .overlay {
+      padding: 20px;
+    }
+
     .content {
+      position: relative;
       max-width: 900px;
       margin: 80px auto 50px auto;
-      padding: 20px;
-      background-color: rgba(255,255,255,0.9);
+      padding: 40px 30px;
+      background-color: rgba(255,255,255,0.95);
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      font-size: 14px;
-      line-height: 1.6;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      font-size: 16px; /* texte un peu plus grand pour lisibilité */
+      line-height: 1.8; /* interligne confortable */
       color: #333;
+      overflow: hidden;
+    }
+
+    /* Logo en filigrane */
+    .content::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px; /* taille du logo */
+      height: 200px;
+      background: url('logo.png') no-repeat center center;
+      background-size: contain;
+      opacity: 0.05; /* très discret */
+      transform: translate(-50%, -50%);
+      pointer-events: none; /* ne gêne pas le texte */
     }
 
     h1, h2 {
@@ -43,6 +70,19 @@
     .contact a:hover {
       text-decoration: underline;
     }
+
+    /* Adaptation responsive */
+    @media (max-width: 600px) {
+      .content {
+        padding: 20px 15px;
+        font-size: 15px;
+      }
+
+      .content::before {
+        width: 120px;
+        height: 120px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -68,12 +108,21 @@
       <h2>5. Modification de la politique</h2>
       <p>Nous nous réservons le droit de modifier cette politique d'utilisation à tout moment. Les utilisateurs sont invités à consulter régulièrement cette page afin de se tenir informés des éventuelles mises à jour.</p>
 
-      <h2>6. Contact</h2>
-      <p class="contact">
-        Pour toute question ou demande relative à cette politique, vous pouvez nous contacter :<br>
-        📧 Email : <a href="giesublimesarl@gmail.com">giesublimesarl@gmail.com</a><br>
-        📱 WhatsApp : <a href="https://wa.me/243904091735" target="_blank">+243904091735</a>
-      </p>
+      <h2>6. Contact et modalités d'utilisation</h2>
+<p class="contact">
+  Pour toute question ou demande relative à cette politique, vous pouvez nous contacter :<br>
+  📧 Email : <a href="mailto:giesublimesarl@gmail.com">giesublimesarl@gmail.com</a><br>
+  📱 WhatsApp : <a href="https://wa.me/243904091735" target="_blank">+243904091735</a>
+</p>
+
+<p>
+  La plateforme est entièrement gratuite pour tous les utilisateurs. Elle s'octroie à trois procédés distincts :<br>
+  1. Par le biais d'un <strong>partenariat entre l'entreprise et un contractant</strong> pour la réalisation de bénéfices au profit de tiers.<br>
+  2. Par le biais d'un <strong>partenariat avec un groupe structuré</strong> ayant la possibilité d'agir à une seule volonté collective.<br>
+  3. De manière <strong>individuelle</strong>, pour un utilisateur agissant seul.<br><br>
+  Il est strictement interdit de partager le <strong>numéro matricule</strong> envoyé lors de la confirmation par email. Toute tentative de transmission de ce numéro à un tiers non bénéficiaire constitue une <strong>violation grave du droit de propriété</strong>. En cas de non-respect, une action appropriée sera immédiatement engagée contre le ou les récalcitrants.
+</p>
+
     </div>
   </div>
 
