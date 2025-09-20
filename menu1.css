@@ -7,7 +7,7 @@
 }
 
 #menu-btn {
-  background-color: #0d1b3d; /* bleu foncé */
+  background-color: #007bff; /* bleu clair*/
   color: white;
   border: none;
   padding: 10px 15px;
@@ -26,7 +26,7 @@
   padding: 0;
   display: none;
   flex-direction: column;
-  background-color: #1a2a5c;
+  background-color: #007bff;
   border-radius: 5px;
   overflow: hidden;
 }
