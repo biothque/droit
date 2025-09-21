@@ -20,23 +20,23 @@
       color: #2d3748;
     }
 
-    .library {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 2rem;
-    }
+   .library {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* centre horizontalement */
+  gap: 20px;               /* espace uniforme entre les tiroirs */
+  margin-top: 2rem;
+}
 
-    .drawer {
-      background-color: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      width: 220px;
-      text-align: center;
-    }
+.drawer {
+  width: 220px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
 
     .drawer:hover {
       transform: translateY(-5px);
@@ -67,53 +67,52 @@
   <h1>📚 Bibliothèque Numérique</h1>
 <button onclick="logout()" style="position: fixed; top: 1rem; right: 1rem;">Déconnexion</button>
   <div class="library">
-    <!-- 5 domaines -->
-    <div class="drawer">
-      <a href="bienvenue.html">
-        <img src="DPI2.jpeg" alt="Bienvenue">
-        <h3>Droit</h3>
-      </a>
-    </div>
-    
-    <div class="drawer">
-     <a href="medecine.html"
-    <img src="medecine.jpg" alt="Médecine">
-    <h3>Médecine</h3>
-  </a>
-</div>
+  <div class="drawer">
+    <a href="bienvenue.html">
+      <img src="DPI2.jpeg" alt="Bienvenue">
+      <h3>Droit</h3>
+    </a>
+  </div>
 
-    <div class="drawer">
-      <a href="litterature.html">
-    <img src="litterature.jpeg" alt="Littérature">
+  <div class="drawer">
+    <a href="medecine.html">
+      <img src="medecine.jpg" alt="Médecine">
+      <h3>Médecine</h3>
+    </a>
+  </div>
+
+  <div class="drawer">
+    <a href="litterature.html">
+      <img src="litterature.jpeg" alt="Littérature">
       <h3>Littérature</h3>
-      </a>
-    </div>
-</div>
-    <div class="drawer">
-  <a href="https://fr.scribd.com/search?query=Fran%C3%A7ais%20"
-    target="_self">
-    <img src="edi.jpeg" alt="Édition">
-    <h3>Édition</h3>
-  </a>
-    </div>
-  
-    <div class="drawer">
-      <a href="propos.html">
-        <img src="ets.jpg" alt="propos">
-        <h3>De nous</h3>
-      </a>
-    </div>
+    </a>
   </div>
 
-  <!-- Domaine 6 centré en dessous -->
-  <div class="library" style="justify-content: center; margin-top: 3rem;">
-    <div class="drawer">
-      <a href="travaux_scientifiques.html">
-        <img src="sciences.jpeg" alt="travaux_scientifiques">
-        <h3>Travaux scientifiques</h3>
-      </a>
-    </div>
+  <div class="drawer">
+    <a href="https://fr.scribd.com/search?query=Fran%C3%A7ais%20" target="_self">
+      <img src="edi.jpeg" alt="Édition">
+      <h3>Édition</h3>
+    </a>
   </div>
+
+  <div class="drawer">
+    <a href="propos.html">
+      <img src="ets.jpg" alt="propos">
+      <h3>De nous</h3>
+    </a>
+  </div>
+</div>
+
+<!-- Domaine supplémentaire centré en dessous -->
+<div class="library" style="justify-content: center; margin-top: 3rem;">
+  <div class="drawer">
+    <a href="travaux_scientifiques.html">
+      <img src="sciences.jpeg" alt="travaux_scientifiques">
+      <h3>Travaux scientifiques</h3>
+    </a>
+  </div>
+</div>
+
   <script>
   // Vérifie la connexion au chargement
   const user = checkAuth();  
@@ -125,6 +124,7 @@
   <script src="navigation.js"></script>
 </body>
 </html>
+
 
 
 
