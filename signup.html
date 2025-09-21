@@ -56,6 +56,14 @@
         <option value="Institutionnel">Institutionnel</option>
       </select>
 
+      <label for="montant">Prix d'un abonnement individuel :</label>
+      <select name="montant" id="montant" required>
+        <option value="">-- Sélectionnez --</option>
+        <option value="Hebdomadaire">Hebdomadaire = 2$</option>
+        <option value="Mensuel">Mensuel = 5$</option>
+        <option value="Negociable">Entreprise/Institution</option>
+      </select>
+
       <button type="submit" class="btn-connexion" onclick="vibrateButton()">S'inscrire</button>
     </form>
 
@@ -97,6 +105,7 @@
       const option = form.option.value.trim();
       const genre = form.genre.value.trim();
       const abonnement = form.abonnement.value.trim();
+      const montant = form.montant.value.trim();
 
       try {
         // Vérifier si l'utilisateur existe déjà
@@ -110,7 +119,7 @@
         }
 
         // Créer le membre
-        const membre = { email, nom, institut, option, genre, abonnement };
+        const membre = { email, nom, institut, option, genre, abonnement, montant };
         await Backendless.Data.of(TABLE).save(membre);
 
         // Afficher le message succès
