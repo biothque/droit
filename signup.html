@@ -15,29 +15,53 @@
       margin-top: 15px;
       display: none;
     }
+    select {
+      display:block;
+      margin:10px auto;
+      padding:8px;
+      width:90%;
+    }
   </style>
 </head>
 <body>
 
   <div class="overlay">
     <!-- Bouton retour -->
-<a href="index.html" class="btn-back" onclick="vibrateButton()">
-  &#8592; Retour
-</a>
+    <a href="index.html" class="btn-back" onclick="vibrateButton()">
+      &#8592; Retour
+    </a>
     <h1>Créer un compte</h1>
     <p>Rejoignez-nous pour explorer la ligne temporelle</p>
 
     <form id="signupForm">
       <input type="email" name="email" placeholder="exemple@domaine.com" required>
-      <input type="text" name="nom" placeholder="Jean Dupont" required>
-      <input type="text" name="institut" placeholder="Université de Kinshasa" required>
+      <input type="text" name="nom" placeholder="BADESI Christian" required>
+      <input type="text" name="institut" placeholder="Université de Kongo" required>
       <input type="text" name="option" placeholder="Informatique / Médecine" required>
-      
+
+      <!-- Nouveau champ Genre -->
+      <label for="genre">Genre :</label>
+      <select name="genre" id="genre" required>
+        <option value="">-- Sélectionnez --</option>
+        <option value="Homme">Homme</option>
+        <option value="Femme">Femme</option>
+      </select>
+
+      <!-- Nouveau champ Abonnement -->
+      <label for="abonnement">Type d'abonnement :</label>
+      <select name="abonnement" id="abonnement" required>
+        <option value="">-- Sélectionnez --</option>
+        <option value="Individuel">Individuel</option>
+        <option value="Collectif">Collectif</option>
+        <option value="Institutionnel">Institutionnel</option>
+      </select>
+
       <button type="submit" class="btn-connexion" onclick="vibrateButton()">S'inscrire</button>
     </form>
 
     <!-- Message succès -->
-    <p id="successMessage">Un email de confirmation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception pour obtenir le matricule."
+    <p id="successMessage">
+      Un email de confirmation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception pour obtenir le matricule.
     </p>
 
     <!-- Message d'erreur -->
@@ -71,6 +95,8 @@
       const nom = form.nom.value.trim();
       const institut = form.institut.value.trim();
       const option = form.option.value.trim();
+      const genre = form.genre.value.trim();
+      const abonnement = form.abonnement.value.trim();
 
       try {
         // Vérifier si l'utilisateur existe déjà
@@ -84,7 +110,7 @@
         }
 
         // Créer le membre
-        const membre = { email, nom, institut, option };
+        const membre = { email, nom, institut, option, genre, abonnement };
         await Backendless.Data.of(TABLE).save(membre);
 
         // Afficher le message succès
@@ -96,7 +122,7 @@
 
         // Redirection automatique après 8 secondes
         setTimeout(() => {
-          window.location.replace("login.html"); // replace pour ne pas pouvoir revenir
+          window.location.replace("login.html");
         }, 8000);
 
       } catch (error) {
