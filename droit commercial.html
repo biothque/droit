@@ -988,7 +988,7 @@ const ouvrages = [
 
  const itemsPerPage = 16;
     let currentPage = 1;
-    let filtered = ouvrages;
+    let filtered = ouvrages.filter(l => l.titre.trim() !== "" && l.pdf.startsWith("http"));
 
     const library = document.getElementById("library");
     const pagination = document.getElementById("pagination");
