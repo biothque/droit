@@ -20,24 +20,28 @@ function redirectToLogin(message) {
  * Vérifie si le matricule existe encore dans Backendless
  */
 async function verifyMatricule() {
+  // Récupère la session dans localStorage
   const sessionStr = localStorage.getItem("userSession");
   if (!sessionStr) return redirectToLogin();
 
   const session = JSON.parse(sessionStr);
+
   if (!session.matricule) return redirectToLogin();
 
   try {
+    // Requête Backendless pour vérifier le matricule
     const whereClause = `matricule = '${session.matricule}'`;
     const queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(whereClause);
     const result = await Backendless.Data.of(TABLE).find(queryBuilder);
 
     if (!result || result.length === 0) {
-      // Matricule supprimé
+      // Matricule supprimé -> déconnecter l'utilisateur
       redirectToLogin("Votre compte a été supprimé ou n'existe plus.");
     }
+
   } catch (err) {
     console.error("Erreur vérification session :", err);
-    redirectToLogin();
+    redirectToLogin("Erreur lors de la vérification de votre session.");
   }
 }
 
