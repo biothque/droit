@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion</title>
+  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  <style>
+    :root{
+      --blue: #2563eb;      /* bleu principal */
+      --blue-dark:#1e40af;  /* au survol */
+      --text:#0f172a;
+      --muted:#64748b;
+      --bg1:#f8fafc;
+      --bg2:#eef2ff;
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    .login-container{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 48px 16px 120px; /* espace pour le bouton flottant */
+      box-sizing:border-box;
+    }
+    .card{
+      width:100%;
+      max-width:420px;
+      background:white;
+      border-radius:24px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+      padding:28px;
+      border:1px solid rgba(2,6,23,0.06);
+    }
+    h2{
+      margin:0 0 8px 0;
+      font-weight:700;
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      margin:0 0 20px 0;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin: 14px 0 6px 0;
+    }
+    label{
+      font-size:0.9rem;
+      color:#334155;
+    }
+    input[type="text"]{
+      width:100%;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid #e2e8f0;
+      background:#fff;
+      font-size:1rem;
+      outline:none;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    input[type="text"]:focus{
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+    }
+
+    /* Bouton flottant, centré vers le bas */
+    .floating-actions{
+      position: fixed;
+      left:50%;
+      bottom:32px;
+      transform: translateX(-50%);
+      width: min(560px, calc(100% - 32px));
+      display:flex;
+      justify-content:center;
+      pointer-events:none; /* container non cliquable */
+    }
+    button[type="submit"]{
+      pointer-events:auto; /* bouton cliquable */
+      width:100%;
+      max-width:420px;
+      padding:14px 18px;
+      font-size:1.05rem;
+      font-weight:700;
+      border:none;
+      border-radius:999px;
+      background: var(--blue);
+      color:white;
+      cursor:pointer;
+      box-shadow: 0 12px 24px rgba(37,99,235,0.25);
+      transition: transform .08s ease, box-shadow .2s ease, background .15s ease, opacity .2s ease;
+    }
+    button[type="submit"]:hover{
+      background: var(--blue-dark);
+      box-shadow: 0 16px 30px rgba(37,99,235,0.32);
+      transform: translateY(-1px);
+    }
+    button[type="submit"]:active{
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(37,99,235,0.25);
+    }
+    button[disabled]{
+      opacity:.7;
+      cursor:not-allowed;
+      transform:none !important;
+      box-shadow: 0 6px 14px rgba(37,99,235,0.18);
+    }
+
+    #loginMessage{
+      margin-top:10px;
+      min-height: 22px;
+      font-size:0.95rem;
+    }
+    .ok{ color:#16a34a; }
+    .err{ color:#dc2626; }
+    .info{ color:#0ea5e9; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="card">
+      <h2>Connexion par Matricule</h2>
+      <p class="subtitle">Entrez votre matricule pour accéder à l’espace protégé.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="matricule">Matricule</label>
+          <input type="text" id="matricule" placeholder="Ex. 23-ABC-001" required />
+        </div>
+
+        <p id="loginMessage" class="info" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bouton flottant centré vers le bas -->
+  <div class="floating-actions">
+    <button type="submit" form="loginForm" id="submitBtn">Se connecter</button>
+  </div>
+
+  <script>
+    // === Config ===
+    const APP_ID = "B4A3DE5F-5247-43FC-8831-C87303139B55";
+    const API_KEY = "0D40C30E-CC67-4C67-B532-1BF5BB94BCC4";
+    const TABLE  = "utilisateurs";
+
+    // === Utilitaires UI ===
+    const $ = (sel) => document.querySelector(sel);
+    const loginForm = $("#loginForm");
+    const submitBtn = $("#submitBtn");
+    const messageEl = $("#loginMessage");
+
+    function setMessage(text, cls="info"){
+      messageEl.className = cls;
+      messageEl.textContent = text;
+    }
+
+    // === Sons (Web Audio) ===
+    let audioCtx;
+    function ensureAudio(){
+      if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+    function beep({freq=440, duration=200, type="sine", gain=0.05} = {}){
+      ensureAudio();
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.value = freq;
+      g.gain.value = gain;
+      osc.connect(g).connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      osc.start(now);
+      osc.stop(now + duration/1000);
+    }
+    async function successJingle(){
+      ensureAudio();
+      // petite montée : do-mi-sol (C4-E4-G4)
+      const notes = [261.63, 329.63, 392.00];
+      for (let i=0;i<notes.length;i++){
+        beep({freq: notes[i], duration: 140, type:"triangle", gain:0.06});
+        await new Promise(r=>setTimeout(r, 120));
+      }
+    }
+    function errorBuzz(){
+      // court bourdonnement grave + vibration
+      beep({freq: 120, duration: 260, type:"square", gain:0.04});
+      if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
+    }
+
+    // === Requête Backendless ===
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const matricule = $("#matricule").value.trim();
+
+      if(!matricule){
+        setMessage("Veuillez entrer votre matricule.", "err");
+        errorBuzz();
+        return;
+      }
+
+      setMessage("Vérification en cours...", "info");
+      submitBtn.disabled = true;
+
+      try{
+        // where correctement encodé
+        const where = encodeURIComponent(`matricule='${matricule}'`);
+        const url = `https://api.backendless.com/${APP_ID}/${API_KEY}/data/${TABLE}?where=${where}`;
+
+        const response = await fetch(url);
+        if(!response.ok){
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0){
+          const user = { matricule: data[0].matricule }; // uniquement le champ utile
+localStorage.setItem("userSession", JSON.stringify(user));
+          setMessage("Connexion réussie ✅ Redirection...", "ok");
+          await successJingle();
+          
+          // Petite latence pour que le jingle soit audible
+          setTimeout(()=>{ window.location.href = "acces.html"; }, 300);
+        }else{
+          setMessage("Matricule incorrect ❌", "err");
+          errorBuzz();
+        }
+      }catch(err){
+        console.error(err);
+        setMessage("Erreur de connexion : " + (err?.message || err), "err");
+        errorBuzz();
+      }finally{
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Accessibilité : Enter sur le champ focalise le bouton (feedback tactile)
+    $("#matricule").addEventListener("keydown", (e)=>{
+      if(e.key === "Enter"){
+        submitBtn.focus();
+      }
+    });
+  </script>
+  <script src="/js/checkSession.js"></script>
+</body>
+</html>
+
+
+
+
+
