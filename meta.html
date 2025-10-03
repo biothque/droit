@@ -161,16 +161,244 @@
 <script>
 const ouvrages = [
   {
-    titre: "vide",
-    auteur: "Dr",
+    titre: "La connaissance du Christ",
+    auteur: "Dr Rudolf Steiner",
     image: "meta2.jpeg",
-    pdf: "/preview"
+    pdf: "https://drive.google.com/file/d/11dzbYTiZnjJghn094mZyQbRiyA0sG8AN/preview"
   },
   {
-    titre: " ",
-    auteur: "Dr ",
+    titre: "Microcosme et Macrocosme",
+    auteur: "Dr Rudolf Steiner",
     image: "meta2.jpeg",
-    pdf: "/preview"
+    pdf: "https://drive.google.com/file/d/1PMWRphBtwbbcTi1TqBuPezJwlxCq2mG0/preview"
+  },
+  {
+    titre: "Les missionnaires de Satan",
+    auteur: "Dr Ruiter",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1WhAkdlmli8tbKYTSpfJiqzwFUgxDZHCI/preview"
+  },
+  {
+    titre: "L'univers dévoilé",
+    auteur: "Dr James Lequeux",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1TWH_eYgxS9xZMq5tbnPYfyOgyUXA_z1Z/preview"
+  },
+  {
+    titre: "Théosophie",
+    auteur: "Dr Rudolf Steiner",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1sVz9YY9YoG3sL5ILY_idFN8YsaxuAJmF/preview"
+  },
+  {
+    titre: "Dans l'invisible spiritisme et Médiumnité",
+    auteur: "Dr Léon Denis",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1r8sousXC8QRqVmom49oZMtLEH4xb9OP4/preview"
+  },
+  {
+    titre: "sciences occultes",
+    auteur: "Dr G. Plytoff",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1MjXLYcaggl8n4NnYzk4wJlYXQDfkCb5I/preview"
+  },
+  {
+    titre: "Rituel de la haute magie",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/10aOJeOoUt4i6h2LadDeRHrCveugLw5LP/preview"
+  },
+  {
+    titre: "Le spiritisme",
+    auteur: "Dr Allan Kardec",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1S-6UdeHuBfBCsz_8VpHMvlUzXRLngHj7/preview"
+  },
+  {
+    titre: "Ondes de vie et ondes de mort",
+    auteur: "Dr Jean de Foye",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1b54YQrYVIr8WoHI80uBVcf9dxld1BIlZ/preview"
+  },
+  {
+    titre: "Magnétisme",
+    auteur: "Dr Arthur Schopenhauer",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/19YDyHsDVcyYjPK8y8CwxjI2Xmi5WgU2/preview"
+  },
+  {
+    titre: "Maçonnerie et sectes secrètes : les côtes cachés de l'histoire",
+    auteur: "Dr Epiphanius",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1acZNa7ObSDKu9d07A_QMWBZHgftuxTYt/preview"
+  },
+  {
+    titre: "les métamorphose d'ovide",
+    auteur: "Dr Ovide",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1M0_s-7blKjwv8yKGOg81ETvbcdlME35y/preview"
+  },
+  {
+    titre: "Les survivants de l'Atlantide",
+    auteur: "Dr Albert Slosman",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1X7-aRkHd_CRWtynOXLz0mJhJaKEOKk9r/preview"
+  },
+  {
+    titre: "Les sociétés secrètes",
+    auteur: "Dr Jan van Helsing",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1qsn0I7fXUU8bc0i5hctiF_OR2Vl6UnQL/preview"
+  },
+  {
+    titre: "Kybalion",
+    auteur: "Dr Thoth",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1ycXRGGN0crm3LEprwwPRogg4gRyaYbds/preview"
+  },
+  {
+    titre: "Banquet",
+    auteur: "Dr Platon",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1Gya0ltinD83_XoEXlu79GPhPAYcr6ifq/preview"
+  },
+  {
+    titre: "Ke pouvoir de la Kabbale",
+    auteur: "Dr Rav Berg",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1RngzCahhvIhWjseDJT9p4lC1NKbYNzJq/preview"
+  },
+  {
+    titre: "Les mystères du Grand Sphinx",
+    auteur: "Dr Robert Bauval et Graham Hancock",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1t_dnG7oPUlG1HCZYRkXB-DzgON3Qiyqf/preview"
+  },
+  {
+    titre: "Le manuscrit inachevé",
+    auteur: "Dr Franck Thilliez",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1B3-6V81IFOTyxQO-aARYq2f-zHJkXGZx/preview"
+  },
+  {
+    titre: "Le livre de Mediums",
+    auteur: "Dr Allan Kardec",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1xtdDuedNUoFiWUIq4ayWyUTE-_JaXwXo/preview"
+  },
+  {
+    titre: "Livre d'Henock",
+    auteur: "Dr François",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1fsPwN2BpbOEPjkf04XUWc5vyNrP1F7ae/preview"
+  },
+  {
+    titre: "Le grand secret des pyramides de Gizeh",
+    auteur: "Dr Guy Gruair et Guy Mouny",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/16OCYI5R1-ftLDhK7Ggoc24d7n3Q6JN1A/preview"
+  },
+  {
+    titre: "Théogonie",
+    auteur: "Dr Lecomte",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1908EZjTOR5zbMtF8EUQRdblhHO685AzQ/preview"
+  },
+  {
+    titre: "Grand Archane",
+    auteur: "Dr Eliphas Levi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/12NORPDtVU4Y2l0I2dKHdOwqpRbo0SZmM/preview"
+  },
+  {
+    titre: "Affaires Warren",
+    auteur: "Dr Warren",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1_kZienJr__vaRFSs-ddkAcs1FlGn6_mV/preview"
+  },
+  {
+    titre: "L'initiation",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1cKQRKw6A7Chg-X2y1lN1EgCalJJHUPNG/preview"
+  },
+  {
+    titre: "l'histoire de la magie",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1VA7eOxe0jVCK_TnT-3uon5c5ProYL2Yr/preview"
+  },
+  {
+    titre: "La clef de Grands mystères",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1ISIHYM281JpKjYYbdq6-OBJhLYBz_pBT/preview"
+  },
+  {
+    titre: "Le Dragon Rouge",
+    auteur: "Dr Mélanie Papot",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1HPGIH0WRr-OSKTzp59LPClNcbaodP8qQ/preview"
+  },
+  {
+    titre: "Dogme et rituel de la haute magie",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1AE2WdBgimANA2AzFiX7uZexnLecw81fB/preview"
+  },
+  {
+    titre: "Kama Sutra",
+    auteur: "Dr Steve",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/15E2aJvy6fhCmKoX2iNWTuMpLlB0svJ5C/preview"
+  },
+  {
+    titre: "Traité de la Thurgie",
+    auteur: "Dr Samael",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1rtbLdadXk8RE5vhQppLIZ4Ywa5Zv1-gB/preview"
+  },
+  {
+    titre: "Clef Universelle des sciences secrètes",
+    auteur: "Dr Matemius",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/16F3j5W4x3oAghajtbS1EkXxLuAFgaNqf/preview"
+  },
+  {
+    titre: "Le livre des Esprits",
+    auteur: "Dr Allan Kardec",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1yVYbXyJjbehOLf6J8ob48zMiD1YdKZ31/preview"
+  },
+  {
+    titre: "Traité de l'astrologie",
+    auteur: "Dr Eliphas Lévi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1xaAiCWIH9b16l8NTx5O_FAyD9qDK9ymz/preview"
+  },
+  {
+    titre: "Basic",
+    auteur: "Dr Bertrand Russel",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1MKgGgJ1eqU3jSRz6w4Kfy6cqOOZrqvl5/preview"
+  },
+  {
+    titre: "Cours de base guérison naturelle",
+    auteur: "Dr Moretto",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1_DBCXNFHre4mTyb5KiuosV5h_MgHh9-4/preview"
+  },
+  {
+    titre: "Numérologie de la Kabbale",
+    auteur: "Dr Eliphas Levi",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1gSTGHatasdIxsFIxn2AH9TqQEVPKu6h-/preview"
+  },
+  {
+    titre: "Prêtresse d'Isis",
+    auteur: "Dr Édouard Schuré",
+    image: "meta2.jpeg",
+    pdf: "https://drive.google.com/file/d/1xiObvNnAbAypV_W8UG83uUHM-QBH8bt1/preview"
   }
 ];
 
