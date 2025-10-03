@@ -12,6 +12,10 @@ menu.innerHTML = `
     <li><a href="medecine.html"><i class="fas fa-user"></i> Médecine </a></li>
     <li><a href="bienvenue.html"><i class="fas fa-cogs"></i> Droit</a></li>
     <li><a href="litterature.html"><i class="fas fa-cogs"></i> Littérature</a></li>
+    <li><a href="terra.html"><i class="fas fa-cogs"></i> Sciences de la terre</a></li>
+    <li><a href="nature.html"><i class="fas fa-cogs"></i> Science naturelle</a></li>
+    <li><a href="meta.html"><i class="fas fa-cogs"></i> Metaphysique</a></li>
+    <li><a href="construction.html"><i class="fas fa-cogs"></i> Constructions</a></li>
     <li><a href="https://fr.scribd.com/search?query=Fran%C3%A7ais%20"><i class="fas fa-cogs"></i> Grande Édition</a></li>
    <li><a href="travaux_scientifiques.html"><i class="fas fa-home"></i> Travaux scientifiques</a></li>
     <li><a href="propos.html"><i class="fas fa-envelope"></i> Contact</a></li>
